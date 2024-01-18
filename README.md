@@ -1,3 +1,3 @@
 # Password Generator
 
-Login page with a custom password generator.
+Register page with a custom password generator.
