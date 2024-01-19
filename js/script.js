@@ -16,14 +16,40 @@ const getNumber = () => {
 };
 
 const getSymbol = () => {
-  const symbols = "[]{}()!@#$%&*_-+=/?><,.";
+  const symbols = "[]{}()!@#$%&*_-+=/><,.";
   return symbols[Math.floor(Math.random() * symbols.length)];
+};
+
+const generatePassword = (
+  getLowercaseLetter,
+  getUppercaseLetter,
+  getNumber,
+  getSymbol
+) => {
+  let password = "";
+  const lenght = 10;
+
+  const generators = [
+    getLowercaseLetter,
+    getUppercaseLetter,
+    getNumber,
+    getSymbol,
+  ];
+
+  for (let i = 0; i < lenght; i++) {
+    password += generators[Math.floor(Math.random() * generators.length)]();
+  }
+
+  generatedPasswordDiv.style.display = "block";
+  generatedPasswordDiv.querySelector("h4").innerHTML = password;
 };
 
 // Event listeners
 generatePasswordSpan.addEventListener("click", () => {
-  console.log(getLowercaseLetter());
-  console.log(getUppercaseLetter());
-  console.log(getNumber());
-  console.log(getSymbol());
+  generatePassword(
+    getLowercaseLetter,
+    getUppercaseLetter,
+    getNumber,
+    getSymbol
+  );
 });
