@@ -1,5 +1,7 @@
 // Selecting elements
-const generatePasswordSpan = document.querySelector("#generate-password");
+const openGeneratePasswordSpan = document.querySelector(
+  "#open-generate-password"
+);
 const generatedPasswordDiv = document.querySelector("#generated-password");
 
 // Functions
@@ -45,7 +47,7 @@ const generatePassword = (
 };
 
 // Event listeners
-generatePasswordSpan.addEventListener("click", () => {
+openGeneratePasswordSpan.addEventListener("click", () => {
   generatePassword(
     getLowercaseLetter,
     getUppercaseLetter,
