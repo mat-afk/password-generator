@@ -2,7 +2,16 @@
 const openGeneratePasswordSpan = document.querySelector(
   "#open-generate-password"
 );
-const generatedPasswordDiv = document.querySelector("#generated-password");
+const generatedPasswordContainer = document.querySelector(
+  "#generated-password"
+);
+const customOptionsContainer = document.querySelector("#custom-options");
+const lengthInput = document.querySelector("#length");
+const lettersCheckbox = document.querySelector("#letters");
+const numbersCheckbox = document.querySelector("#numbers");
+const symbolsCheckbox = document.querySelector("#symbols");
+const generatePasswordBtn = document.querySelector("#generate-password");
+const copyPasswordBtn = document.querySelector("#copy-password");
 
 // Functions
 const getLowercaseLetter = () => {
@@ -22,36 +31,44 @@ const getSymbol = () => {
   return symbols[Math.floor(Math.random() * symbols.length)];
 };
 
-const generatePassword = (
-  getLowercaseLetter,
-  getUppercaseLetter,
-  getNumber,
-  getSymbol
-) => {
+const setGenerators = () => {
+  const generators = [];
+  if (lettersCheckbox.checked) {
+    generators.push(getLowercaseLetter);
+    generators.push(getUppercaseLetter);
+  }
+  if (numbersCheckbox.checked) {
+    generators.push(getNumber);
+  }
+  if (symbolsCheckbox.checked) {
+    generators.push(getSymbol);
+  }
+  return generators;
+};
+
+const generatePassword = (length) => {
   let password = "";
-  const lenght = 10;
 
-  const generators = [
-    getLowercaseLetter,
-    getUppercaseLetter,
-    getNumber,
-    getSymbol,
-  ];
+  const generators = setGenerators();
 
-  for (let i = 0; i < lenght; i++) {
+  for (let i = 0; i < length; i++) {
     password += generators[Math.floor(Math.random() * generators.length)]();
   }
 
-  generatedPasswordDiv.style.display = "block";
-  generatedPasswordDiv.querySelector("h4").innerHTML = password;
+  generatedPasswordContainer.style.display = "block";
+  generatedPasswordContainer.querySelector("h4").innerHTML = password;
 };
 
 // Event listeners
 openGeneratePasswordSpan.addEventListener("click", () => {
-  generatePassword(
-    getLowercaseLetter,
-    getUppercaseLetter,
-    getNumber,
-    getSymbol
-  );
+  customOptionsContainer.classList.toggle("hide");
+});
+
+generatePasswordBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const length = lengthInput.value;
+  if (length < 1 || length > 20) return;
+
+  generatePassword(length);
 });
