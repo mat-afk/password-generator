@@ -72,3 +72,18 @@ generatePasswordBtn.addEventListener("click", (e) => {
 
   generatePassword(length);
 });
+
+copyPasswordBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const password = generatedPasswordContainer.querySelector("h4").innerHTML;
+  if (!password) return;
+
+  navigator.clipboard.writeText(password).then(() => {
+    copyPasswordBtn.innerHTML = "Copied!";
+
+    setTimeout(() => {
+      copyPasswordBtn.innerHTML = "Copy";
+    }, 700);
+  });
+});
